@@ -14,8 +14,10 @@ var nodeArgs = process.argv;
 var userEntry = "";
 
 for (var i = 3; i < nodeArgs.length; i++) {
-	userEntry = userEntry + " " + nodeArgs[i];
-}
+	userEntry += nodeArgs[i] + " ";
+	// userEntry = userEntry + " " + nodeArgs[i];
+	}
+	userEntry = userEntry.trim();
 
 
 
@@ -67,7 +69,6 @@ client.get("statuses/user_timeline", params, function(error, tweets, response) {
 };
 
 function spotifyThisSong(userEntry) {
-	console.log(userEntry);
 
 	var spotify = new Spotify(keys.spotify);
 	// console.log(userEntry);
@@ -75,7 +76,6 @@ function spotifyThisSong(userEntry) {
 	if (userEntry == null){
 		userEntry = "The Sign";
 	}
-	// console.log(userEntry);
 
 	spotify.search({type: 'track', query: userEntry}, function(err, data) {
 		// console.log(userEntry);
@@ -100,6 +100,10 @@ function spotifyThisSong(userEntry) {
 
 
 function movieThis(userEntry){
+	if (userEntry == null) {
+		userEntry= 'Mr. Nobody';
+	}
+
 var queryUrl = "http://www.omdbapi.com/?t=" + userEntry + "&y=&plot=short&apikey=trilogy";
 
 request(queryUrl, function(error, response, body) {
@@ -127,9 +131,7 @@ function doWhatItSays(){
 				action = data[0];
 				userEntry = data[1];
 			}
-			console.log(action);
-			console.log(userEntry);
-
+			
 			liriCall(action, userEntry);
 		}
 	});
